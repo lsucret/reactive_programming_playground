@@ -1,0 +1,32 @@
+plugins {
+    id 'org.springframework.boot' version '3.0.0' // Spring Boot 플러그인 (버전은 최신으로 설정)
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'  // Spring WebFlux 의존성
+    implementation 'io.projectreactor:reactor-core'  // 리액티브 프로그래밍을 위한 Reactor 라이브러리
+
+    // Reactive Extensions for Java의 약자로, 비동기 프로그래밍과 이벤트 기반 프로그래밍을 쉽게 구현할 수 있도록 설계된 라이브러리
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.6' // part 09 에서 추가
+
+    // StepVerifier를 포함하는 reactor-test 의존성
+    implementation 'io.projectreactor:reactor-test:3.5.0' // 최신 버전으로 설정하세요
+
+    // 테스트 라이브러리 (JUnit 5)
+    implementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}
