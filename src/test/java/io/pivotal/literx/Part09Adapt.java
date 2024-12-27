@@ -53,32 +53,30 @@ public class Part09Adapt {
     // observable -> Flowable -> Flux 로 가야함
     Flux<User> fromObservableToFlux(Observable<User> observable) {
         return Flux.from(Flowable.fromObservable(observable, BackpressureStrategy.BUFFER));
-//        Flowable<User> flowable = Flowable.fromObservable(observable, BackpressureStrategy.BUFFER);// RxJava 3 Observable doesn't support backpressure
-//        return Flux.from(flowable);
     }
 
 //========================================================================================
 
     // TODO Adapt Mono to RxJava Single
     Single<User> fromMonoToSingle(Mono<User> mono) {
-        return null;
+        return Single.fromPublisher(mono);
     }
 
     // TODO Adapt RxJava Single to Mono
     Mono<User> fromSingleToMono(Single<User> single) {
-        return null;
+        return Mono.from(Flowable.fromSingle(single));
     }
 
 //========================================================================================
 
     // TODO Adapt Mono to Java 8+ CompletableFuture
     CompletableFuture<User> fromMonoToCompletableFuture(Mono<User> mono) {
-        return null;
+        return mono.toFuture();
     }
 
     // TODO Adapt Java 8+ CompletableFuture to Mono
     Mono<User> fromCompletableFutureToMono(CompletableFuture<User> future) {
-        return null;
+        return Mono.fromFuture(future);
     }
 
 }
