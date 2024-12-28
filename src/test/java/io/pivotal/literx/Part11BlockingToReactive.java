@@ -78,4 +78,28 @@ public class Part11BlockingToReactive {
                 .then();
     }
 
+    //========================================================================================
+    // 우형 Mono.zipWhen 사용법
+    @Test
+    void test_hwpark() {
+        BlockingRepository<User> repository = new BlockingUserRepository();
+        test(repository).subscribe();
+    }
+    Mono<User> test(BlockingRepository<User> repository) {
+        return Mono.just("test")
+                .defer(() -> Mono.just(repository.findFirst()))
+                .zipWhen(user -> Mono.just(repository.findById(user.getUsername())))
+                .map((tuple) -> tuple.getT2())
+                .publishOn(Schedulers.boundedElastic())
+                ;
+    }
+
+    //========================================================================================
+    // then, and, delayUntil / 순서보장, 병렬, ~~까지 기다려(블록).
+
+    Mono<User> test2(BlockingRepository<User> repository) {
+        return Mono.just(repository.findById(User.JESSE.getUsername()))
+                .then(Mono.just(User.SKYLER));
+    }
+
 }
